@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "badger_core",
+    "badger_ovba",
+]

@@ -1,0 +1,25 @@
+pub(crate) mod code_page;
+pub(crate) mod compat_version;
+pub(crate) mod constants;
+pub(crate) mod doc_string;
+pub(crate) mod help_context;
+pub(crate) mod help_file_path;
+pub(crate) mod lcid;
+pub(crate) mod lcid_invoke;
+pub(crate) mod lib_flags;
+pub(crate) mod name;
+pub(crate) mod sys_kind;
+pub(crate) mod version;
+
+pub(crate) use code_page::CodePageRecord;
+pub(crate) use compat_version::CompatVersionRecord;
+pub(crate) use constants::ConstantsRecord;
+pub(crate) use doc_string::DocStringRecord;
+pub(crate) use help_context::HelpContextRecord;
+pub(crate) use help_file_path::HelpFilePathRecord;
+pub(crate) use lcid::LcidRecord;
+pub(crate) use lcid_invoke::LcidInvokeRecord;
+pub(crate) use lib_flags::LibFlagsRecord;
+pub(crate) use name::NameRecord;
+pub(crate) use sys_kind::SysKindRecord;
+pub(crate) use version::VersionRecord;

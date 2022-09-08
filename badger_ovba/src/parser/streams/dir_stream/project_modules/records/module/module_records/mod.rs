@@ -1,0 +1,21 @@
+pub(crate) mod cookie;
+pub(crate) mod doc_string;
+pub(crate) mod help_context;
+pub(crate) mod name;
+pub(crate) mod name_unicode;
+pub(crate) mod offset;
+pub(crate) mod private;
+pub(crate) mod read_only;
+pub(crate) mod stream_name;
+pub(crate) mod type_record;
+
+pub use cookie::ModuleCookieRecord;
+pub use doc_string::ModuleDocStringRecord;
+pub use help_context::ModuleHelpContextRecord;
+pub use name::ModuleNameRecord;
+pub use name_unicode::ModuleNameUnicodeRecord;
+pub use offset::ModuleOffsetRecord;
+pub use private::ModulePrivateRecord;
+pub use read_only::ModuleReadOnlyRecord;
+pub use stream_name::ModuleStreamNameRecord;
+pub use type_record::ModuleTypeRecord;
