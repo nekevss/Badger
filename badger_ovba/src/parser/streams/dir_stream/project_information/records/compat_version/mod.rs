@@ -22,9 +22,9 @@ impl Parsable for CompatVersionRecord {
     type Output = CompatVersionRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let compat_version = utils::get_u32(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let compat_version = utils::get_u32(cursor)?;
 
         Ok(Self {
             id,

@@ -19,9 +19,9 @@ impl Parsable for CodePageRecord {
     type Output = CodePageRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let code_page = utils::get_u16(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let code_page = utils::get_u16(cursor)?;
 
         Ok(Self {
             _id: id,

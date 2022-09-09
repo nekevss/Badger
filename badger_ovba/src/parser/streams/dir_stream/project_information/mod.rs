@@ -94,7 +94,7 @@ impl Parsable for ProjectInformation {
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
         let sys_kind = SysKindRecord::parse(cursor)?;
-        let compat_version = if utils::peek_u16(cursor) == 0x004A {
+        let compat_version = if utils::peek_u16(cursor)? == 0x004A {
             let compat_value = CompatVersionRecord::parse(cursor)?;
             Some(compat_value)
         } else {
@@ -109,7 +109,7 @@ impl Parsable for ProjectInformation {
         let help_context = HelpContextRecord::parse(cursor)?;
         let lib_flags = LibFlagsRecord::parse(cursor)?;
         let version = VersionRecord::parse(cursor)?;
-        let constants = if utils::peek_u16(cursor) == 0x000C {
+        let constants = if utils::peek_u16(cursor)? == 0x000C {
             let constants_record = ConstantsRecord::parse(cursor)?;
             Some(constants_record)
         } else {

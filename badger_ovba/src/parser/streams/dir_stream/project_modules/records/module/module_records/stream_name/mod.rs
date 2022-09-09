@@ -23,12 +23,12 @@ impl Parsable for ModuleStreamNameRecord {
     type Output = ModuleStreamNameRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size_of_stream_name = utils::get_u32(cursor);
-        let stream_name = utils::get_n_bytes(cursor, size_of_stream_name as usize);
-        let _reserved = utils::get_u16(cursor);
-        let size_of_stream_name_unicode = utils::get_u32(cursor);
-        let stream_name_unicode = utils::get_n_bytes(cursor, size_of_stream_name_unicode as usize);
+        let id = utils::get_u16(cursor)?;
+        let size_of_stream_name = utils::get_u32(cursor)?;
+        let stream_name = utils::get_n_bytes(cursor, size_of_stream_name as usize)?;
+        let _reserved = utils::get_u16(cursor)?;
+        let size_of_stream_name_unicode = utils::get_u32(cursor)?;
+        let stream_name_unicode = utils::get_n_bytes(cursor, size_of_stream_name_unicode as usize)?;
 
         Ok(Self {
             id,

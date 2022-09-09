@@ -18,14 +18,14 @@ impl Parsable for ProjectReferences {
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
         let mut reference_array = Vec::new();
 
-        let mut peek_id = utils::peek_u16(cursor);
+        let mut peek_id = utils::peek_u16(cursor)?;
         // The ProjectReferences Record is terminated by a 2 byte id == 0x000F, which
         // signals the beginning of the ProjectModules
         while peek_id != 0x000F {
             let reference = Reference::parse(cursor)?;
             reference_array.push(reference);
 
-            peek_id = utils::peek_u16(cursor);
+            peek_id = utils::peek_u16(cursor)?;
         }
 
         Ok(Self { reference_array })

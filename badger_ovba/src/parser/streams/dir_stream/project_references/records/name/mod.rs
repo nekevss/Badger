@@ -17,12 +17,12 @@ impl Parsable for ReferenceName {
     type Output = ReferenceName;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size_of_name = utils::get_u32(cursor);
-        let name = utils::get_n_bytes(cursor, size_of_name as usize);
-        let reserved = utils::get_u16(cursor);
-        let size_of_name_unicode = utils::get_u32(cursor);
-        let name_unicode = utils::get_n_bytes(cursor, size_of_name_unicode as usize);
+        let id = utils::get_u16(cursor)?;
+        let size_of_name = utils::get_u32(cursor)?;
+        let name = utils::get_n_bytes(cursor, size_of_name as usize)?;
+        let reserved = utils::get_u16(cursor)?;
+        let size_of_name_unicode = utils::get_u32(cursor)?;
+        let name_unicode = utils::get_n_bytes(cursor, size_of_name_unicode as usize)?;
 
         Ok(Self {
             id,

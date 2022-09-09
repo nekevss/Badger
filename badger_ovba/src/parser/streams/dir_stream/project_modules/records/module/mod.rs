@@ -52,21 +52,21 @@ impl Parsable for ModuleRecord {
         let help_context = ModuleHelpContextRecord::parse(cursor)?;
         let cookie = ModuleCookieRecord::parse(cursor)?;
         let type_record = ModuleTypeRecord::parse(cursor)?;
-        let read_only = if utils::peek_u16(cursor) == 0x0025 {
+        let read_only = if utils::peek_u16(cursor)? == 0x0025 {
             let record_value = ModuleReadOnlyRecord::parse(cursor)?;
             Some(record_value)
         } else {
             None
         };
-        let private = if utils::peek_u16(cursor) == 0x0028 {
+        let private = if utils::peek_u16(cursor)? == 0x0028 {
             let private_value = ModulePrivateRecord::parse(cursor)?;
             Some(private_value)
         } else {
             None
         };
 
-        let terminator = utils::get_u16(cursor);
-        let _reserved = utils::get_u32(cursor);
+        let terminator = utils::get_u16(cursor)?;
+        let _reserved = utils::get_u32(cursor)?;
 
         Ok(Self {
             name,

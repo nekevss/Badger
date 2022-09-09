@@ -19,9 +19,9 @@ impl Parsable for HelpContextRecord {
     type Output = HelpContextRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let help_context = utils::get_u32(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let help_context = utils::get_u32(cursor)?;
 
         Ok(Self {
             id,

@@ -24,10 +24,10 @@ impl Parsable for VersionRecord {
     type Output = VersionRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let reserved = utils::get_u32(cursor);
-        let major_version = utils::get_u32(cursor);
-        let minor_version = utils::get_u16(cursor);
+        let id = utils::get_u16(cursor)?;
+        let reserved = utils::get_u32(cursor)?;
+        let major_version = utils::get_u32(cursor)?;
+        let minor_version = utils::get_u16(cursor)?;
 
         Ok(Self {
             id,

@@ -12,9 +12,9 @@ impl Parsable for ReferenceOriginal {
     type Output = ReferenceOriginal;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, crate::error::Error> {
-        let id = utils::get_u16(cursor);
-        let size_of_libid_original = utils::get_u32(cursor);
-        let libid_original = utils::get_n_bytes(cursor, size_of_libid_original as usize);
+        let id = utils::get_u16(cursor)?;
+        let size_of_libid_original = utils::get_u32(cursor)?;
+        let libid_original = utils::get_n_bytes(cursor, size_of_libid_original as usize)?;
 
         Ok(Self {
             id,

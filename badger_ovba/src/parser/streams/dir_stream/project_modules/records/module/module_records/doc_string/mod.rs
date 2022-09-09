@@ -15,12 +15,12 @@ impl Parsable for ModuleDocStringRecord {
     type Output = ModuleDocStringRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size_of_doc_string = utils::get_u32(cursor);
-        let doc_string = utils::get_n_bytes(cursor, size_of_doc_string as usize);
-        let _reserved = utils::get_u16(cursor);
-        let size_of_doc_string_unicode = utils::get_u32(cursor);
-        let doc_string_unicode = utils::get_n_bytes(cursor, size_of_doc_string_unicode as usize);
+        let id = utils::get_u16(cursor)?;
+        let size_of_doc_string = utils::get_u32(cursor)?;
+        let doc_string = utils::get_n_bytes(cursor, size_of_doc_string as usize)?;
+        let _reserved = utils::get_u16(cursor)?;
+        let size_of_doc_string_unicode = utils::get_u32(cursor)?;
+        let doc_string_unicode = utils::get_n_bytes(cursor, size_of_doc_string_unicode as usize)?;
 
         Ok(Self {
             id,

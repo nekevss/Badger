@@ -19,17 +19,17 @@ impl Parsable for ReferenceProject {
     type Output = ReferenceProject;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let _size = utils::get_u32(cursor);
+        let id = utils::get_u16(cursor)?;
+        let _size = utils::get_u32(cursor)?;
 
-        let size_of_libid_absolute = utils::get_u32(cursor);
-        let libid_absolute = utils::get_n_bytes(cursor, size_of_libid_absolute as usize);
+        let size_of_libid_absolute = utils::get_u32(cursor)?;
+        let libid_absolute = utils::get_n_bytes(cursor, size_of_libid_absolute as usize)?;
 
-        let size_of_libid_relative = utils::get_u32(cursor);
-        let libid_relative = utils::get_n_bytes(cursor, size_of_libid_relative as usize);
+        let size_of_libid_relative = utils::get_u32(cursor)?;
+        let libid_relative = utils::get_n_bytes(cursor, size_of_libid_relative as usize)?;
 
-        let major_version = utils::get_u32(cursor);
-        let minor_version = utils::get_u16(cursor);
+        let major_version = utils::get_u32(cursor)?;
+        let minor_version = utils::get_u16(cursor)?;
 
         Ok(Self {
             id,

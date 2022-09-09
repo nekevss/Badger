@@ -35,9 +35,9 @@ impl Parsable for SysKindRecord {
     type Output = SysKindRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let sys_kind_id = utils::get_u32(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let sys_kind_id = utils::get_u32(cursor)?;
 
         let sys_kind = match sys_kind_id {
             0x00000000 => SysKind::Win16,

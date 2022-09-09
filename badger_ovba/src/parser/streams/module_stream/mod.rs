@@ -16,13 +16,13 @@ impl ModuleStream {
 
 impl ModuleStream {
     // Using a custom parse here since we rely on passing offset into the ModuleStream
-    pub fn parse(cursor: &mut Cursor<&[u8]>, offset: u32) -> ModuleStream {
-       let _performance_cache = utils::get_n_bytes(cursor, offset as usize);
+    pub fn parse(cursor: &mut Cursor<&[u8]>, offset: u32) -> Result<ModuleStream, Error> {
+       let _performance_cache = utils::get_n_bytes(cursor, offset as usize)?;
        let stream_len = cursor.get_ref().len();
-       let compressed_source_code = utils::get_n_bytes(cursor, stream_len-offset as usize);
+       let compressed_source_code = utils::get_n_bytes(cursor, stream_len-offset as usize)?;
        
-       Self {
+       Ok(Self {
         compressed_source_code,
-       }
+       })
     }
 }

@@ -19,9 +19,9 @@ impl Parsable for ModuleOffsetRecord {
     type Output = ModuleOffsetRecord;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let text_offset = utils::get_u32(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let text_offset = utils::get_u32(cursor)?;
 
         Ok(Self {
             id,

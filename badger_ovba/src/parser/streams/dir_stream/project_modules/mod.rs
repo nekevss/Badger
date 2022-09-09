@@ -19,9 +19,9 @@ impl Parsable for ProjectModules {
     type Output = ProjectModules;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let id = utils::get_u16(cursor);
-        let size = utils::get_u32(cursor);
-        let count = utils::get_u16(cursor);
+        let id = utils::get_u16(cursor)?;
+        let size = utils::get_u32(cursor)?;
+        let count = utils::get_u16(cursor)?;
         let project_cookie = ProjectCookieRecord::parse(cursor)?;
         let mut modules = Vec::new();
 

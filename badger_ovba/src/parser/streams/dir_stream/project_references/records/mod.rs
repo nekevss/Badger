@@ -33,14 +33,14 @@ impl Parsable for Reference {
     type Output = Reference;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
-        let name = if utils::peek_u16(cursor) == 0x0016 {
+        let name = if utils::peek_u16(cursor)? == 0x0016 {
             let name_value = ReferenceName::parse(cursor)?;
             Some(name_value)
         } else {
             None
         };
 
-        let peek_id = utils::peek_u16(cursor);
+        let peek_id = utils::peek_u16(cursor)?;
 
         let reference_record = match peek_id {
             0x002F => {

@@ -52,7 +52,6 @@ impl BadgerOvba {
         let mut ovba = Ovba::new(compound_file);
 
         let independent_info = ovba.parse_independent_info()?;
-        println!("{:?}", independent_info);
 
         let modules = ovba.parse_modules(&independent_info)?;
 
