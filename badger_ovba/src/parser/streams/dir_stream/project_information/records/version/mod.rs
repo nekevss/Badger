@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::parser::{Parsable, utils};
+use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
 #[derive(Debug)]

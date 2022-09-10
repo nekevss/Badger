@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::parser::{Parsable, utils};
+use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
 #[derive(Debug)]
@@ -22,7 +22,6 @@ impl Parsable for LibFlagsRecord {
         let id = utils::get_u16(cursor)?;
         let size = utils::get_u32(cursor)?;
         let lib_flags = utils::get_u32(cursor)?;
-
 
         Ok(Self {
             id,

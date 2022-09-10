@@ -12,7 +12,7 @@ pub struct ProjectModules {
     size: u32,
     count: u16,
     project_cookie: ProjectCookieRecord,
-    pub(crate)modules: Vec<ModuleRecord>,
+    pub(crate) modules: Vec<ModuleRecord>,
 }
 
 impl Parsable for ProjectModules {

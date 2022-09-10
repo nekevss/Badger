@@ -1,5 +1,5 @@
-use crate::parser::{utils, Parsable};
 use crate::error::Error;
+use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
 pub(crate) mod module_records;
@@ -24,7 +24,6 @@ pub struct ModuleRecord {
     private: Option<ModulePrivateRecord>,
     terminator: u16,
 }
-
 
 impl ModuleRecord {
     pub fn stream_name(&self) -> String {

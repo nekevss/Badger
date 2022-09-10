@@ -9,7 +9,6 @@ pub struct ModuleNameUnicodeRecord {
     module_name_unicode: Vec<u8>,
 }
 
-
 impl ModuleNameUnicodeRecord {
     pub fn value(&self) -> String {
         String::from_utf8(self.module_name_unicode.clone()).unwrap()

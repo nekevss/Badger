@@ -15,22 +15,21 @@
 // -- /PROJECTlk
 // -- /PROJECTwm
 // -- /PROJECT.
-use std::io::{Cursor, Read};
-use std::fs::File;
 use cfb::CompoundFile;
+use std::fs::File;
+use std::io::{Cursor, Read};
 
 pub mod error;
+pub mod ovba_module;
 pub mod parser;
 pub mod utils;
-pub mod ovba_module;
 
 pub use crate::ovba_module::OvbaModule;
 
-use parser::{IndependentVbaProject as DirStream};
 use error::Error;
+use parser::IndependentVbaProject as DirStream;
 
 use crate::parser::Ovba;
-
 
 pub struct BadgerOvba {
     independent_info: DirStream,
@@ -39,10 +38,10 @@ pub struct BadgerOvba {
 
 impl BadgerOvba {
     /// Creates a [`BadgerOvba`] from a file buffer.
-    /// 
-    /// Note: this file uses an external dependency 
+    ///
+    /// Note: this file uses an external dependency
     pub fn from_file(mut file: File) -> Result<Self, Error> {
-        let mut buffer:Vec<u8>= Vec::new();
+        let mut buffer: Vec<u8> = Vec::new();
         file.read_to_end(&mut buffer)?;
 
         let cursor = Cursor::new(buffer);
@@ -55,7 +54,7 @@ impl BadgerOvba {
 
         let modules = ovba.parse_modules(&independent_info)?;
 
-        Ok(Self{
+        Ok(Self {
             independent_info,
             modules,
         })
@@ -63,11 +62,11 @@ impl BadgerOvba {
 
     pub fn from_compound_file(compound_file: CompoundFile<Cursor<Vec<u8>>>) -> Result<Self, Error> {
         let mut ovba = Ovba::new(compound_file);
-        
+
         let independent_info = ovba.parse_independent_info()?;
         let modules = ovba.parse_modules(&independent_info)?;
 
-        Ok(Self{
+        Ok(Self {
             independent_info,
             modules,
         })

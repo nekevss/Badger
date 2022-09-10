@@ -1,9 +1,8 @@
 #[cfg(test)]
-
 use badger_ovba::BadgerOvba;
 use std::fs::File;
-use std::result::Result;
 use std::io::Error;
+use std::result::Result;
 
 #[test]
 fn ovba_from_file() -> Result<(), badger_ovba::error::Error> {
