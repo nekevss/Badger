@@ -5,28 +5,29 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
-pub enum SysKind {
-    Win16,
-    Win32,
-    Win64,
-    MacOS,
-}
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SysKindRecord {
     id: u16,
     size: u32,
-    sys_kind: SysKind,
+    sys_kind: u32,
 }
 
 impl SysKindRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0001,
+            size: 0x00000004,
+            sys_kind: 0x00000003,
+        }
+    }
+
     pub fn value(&self) -> String {
         match self.sys_kind {
-            SysKind::Win16 => "Win16".into(),
-            SysKind::Win32 => "Win32".into(),
-            SysKind::Win64 => "Win64".into(),
-            SysKind::MacOS => "MacOS".into(),
+            0x00000000 => "Win16".into(),
+            0x00000001 => "Win32".into(),
+            0x00000002 => "MacOS".into(),
+            0x00000003 => "Win64".into(),
+            _ => "".into(),
         }
     }
 }
@@ -37,20 +38,7 @@ impl Parsable for SysKindRecord {
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
         let id = utils::get_u16(cursor)?;
         let size = utils::get_u32(cursor)?;
-        let sys_kind_id = utils::get_u32(cursor)?;
-
-        let sys_kind = match sys_kind_id {
-            0x00000000 => SysKind::Win16,
-            0x00000001 => SysKind::Win32,
-            0x00000002 => SysKind::MacOS,
-            0x00000003 => SysKind::Win64,
-            _ => {
-                return Err(Error::Parser(
-                    "Invalid SysKind Value provided".into(),
-                    cursor.position(),
-                ))
-            }
-        };
+        let sys_kind = utils::get_u32(cursor)?;
 
         Ok(Self { id, size, sys_kind })
     }

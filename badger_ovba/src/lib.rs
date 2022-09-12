@@ -15,8 +15,9 @@
 // -- /PROJECTlk
 // -- /PROJECTwm
 // -- /PROJECT.
+#![allow(dead_code)]
+
 use cfb::CompoundFile;
-use std::fs::File;
 use std::io::{Cursor, Read};
 
 pub mod error;
@@ -40,27 +41,25 @@ impl BadgerOvba {
     /// Creates a [`BadgerOvba`] from a file buffer.
     ///
     /// Note: this file uses an external dependency
-    pub fn from_file(mut file: File) -> Result<Self, Error> {
-        let mut buffer: Vec<u8> = Vec::new();
+    pub fn read_from_file<R>(mut file: R) -> Result<Self, Error>
+    where
+        R: Read,
+    {
+        let mut buffer = Vec::<u8>::new();
         file.read_to_end(&mut buffer)?;
 
+        // Initialize the cursor for the passed File and pass it to CompoundFile
         let cursor = Cursor::new(buffer);
-
         let compound_file = CompoundFile::open(cursor)?;
 
-        let mut ovba = Ovba::new(compound_file);
-
-        let independent_info = ovba.parse_independent_info()?;
-
-        let modules = ovba.parse_modules(&independent_info)?;
-
-        Ok(Self {
-            independent_info,
-            modules,
-        })
+        // Feed the CompoundFile to Ovba
+        let selfie = Self::read_from_compound_file(compound_file)?;
+        Ok(selfie)
     }
 
-    pub fn from_compound_file(compound_file: CompoundFile<Cursor<Vec<u8>>>) -> Result<Self, Error> {
+    pub fn read_from_compound_file(
+        compound_file: CompoundFile<Cursor<Vec<u8>>>,
+    ) -> Result<Self, Error> {
         let mut ovba = Ovba::new(compound_file);
 
         let independent_info = ovba.parse_independent_info()?;
@@ -72,9 +71,11 @@ impl BadgerOvba {
         })
     }
 
-    pub fn display_module(&self) {
-        for module in self.modules.iter() {
-            module.print_module()
-        }
+    pub fn modules(&self) -> Vec<OvbaModule> {
+        self.modules.clone()
+    }
+
+    pub fn project_info(&self) -> DirStream {
+        self.independent_info.clone()
     }
 }

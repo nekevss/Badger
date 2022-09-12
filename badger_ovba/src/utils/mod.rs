@@ -1,8 +1,10 @@
 pub mod compression;
 pub mod decompression;
+pub mod encoding;
 
 pub use compression::compress;
 pub use decompression::decompress;
+pub use encoding::convert_mbcs_value;
 
 pub(crate) fn copy_token_help(
     decompressed_chunk_start: usize,

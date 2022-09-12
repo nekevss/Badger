@@ -2,9 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-use super::Reference;
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ReferenceProject {
     id: u16,
     size_of_libid_absolute: u32,
@@ -13,6 +11,24 @@ pub struct ReferenceProject {
     libid_relative: Vec<u8>,
     major_version: u32,
     minor_version: u16,
+}
+
+impl ReferenceProject {
+    pub fn new() -> Self {
+        Self {
+            id: 0x000E,
+            size_of_libid_absolute: 0,
+            libid_absolute: Vec::<u8>::new(),
+            size_of_libid_relative: 0,
+            libid_relative: Vec::<u8>::new(),
+            major_version: 0 as u32,
+            minor_version: 0x0000,
+        }
+    }
+
+    pub fn reference_type(&self) -> &'static str {
+        "project"
+    }
 }
 
 impl Parsable for ReferenceProject {

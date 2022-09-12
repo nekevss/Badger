@@ -10,7 +10,7 @@ use module_records::{
     ModuleStreamNameRecord, ModuleTypeRecord,
 };
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleRecord {
     name: ModuleNameRecord,
     name_unicode: ModuleNameUnicodeRecord,
@@ -26,6 +26,22 @@ pub struct ModuleRecord {
 }
 
 impl ModuleRecord {
+    pub fn new() -> Self {
+        Self {
+            name: ModuleNameRecord::new(),
+            name_unicode: ModuleNameUnicodeRecord::new(),
+            stream_name: ModuleStreamNameRecord::new(),
+            doc_string: ModuleDocStringRecord::new(),
+            offset: ModuleOffsetRecord::new(),
+            help_context: ModuleHelpContextRecord::new(),
+            cookie: ModuleCookieRecord::new(),
+            type_record: ModuleTypeRecord::new(),
+            read_only: None,
+            private: None,
+            terminator: 0x002B,
+        }
+    }
+
     pub fn stream_name(&self) -> String {
         self.stream_name.value()
     }

@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct DocStringRecord {
     id: u16,
     size_of_doc_string: u32,
@@ -12,6 +12,16 @@ pub struct DocStringRecord {
 }
 
 impl DocStringRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0005,
+            size_of_doc_string: 0,
+            doc_string: Vec::new(),
+            size_of_doc_string_unicode: 0,
+            doc_string_unicode: Vec::new(),
+        }
+    }
+
     pub fn value(&self) -> String {
         String::from_utf8(self.doc_string_unicode.clone()).unwrap()
     }

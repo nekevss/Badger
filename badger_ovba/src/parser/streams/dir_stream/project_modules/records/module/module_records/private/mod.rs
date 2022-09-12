@@ -2,9 +2,15 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModulePrivateRecord {
     id: u16,
+}
+
+impl ModulePrivateRecord {
+    pub fn new() -> Self {
+        Self { id: 0x0028 }
+    }
 }
 
 impl Parsable for ModulePrivateRecord {

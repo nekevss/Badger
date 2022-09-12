@@ -12,13 +12,13 @@ use records::{
     VersionRecord,
 };
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ProjectInformation {
     sys_kind: SysKindRecord,
     compat_version: Option<CompatVersionRecord>,
     lcid: LcidRecord,
     lcid_invoke: LcidInvokeRecord,
-    codepage: CodePageRecord,
+    code_page: CodePageRecord,
     name: NameRecord,
     doc_string: DocStringRecord,
     help_file_path: HelpFilePathRecord,
@@ -29,6 +29,35 @@ pub struct ProjectInformation {
 }
 
 impl ProjectInformation {
+    pub fn new() -> Self {
+        let sys_kind = SysKindRecord::new();
+        let lcid = LcidRecord::new();
+        let lcid_invoke = LcidInvokeRecord::new();
+        let code_page = CodePageRecord::new();
+        let name = NameRecord::new();
+        let doc_string = DocStringRecord::new();
+        let help_file_path = HelpFilePathRecord::new();
+        let help_context = HelpContextRecord::new();
+        let lib_flags = LibFlagsRecord::new();
+        let version = VersionRecord::new();
+        let constants = Some(ConstantsRecord::new());
+
+        Self {
+            sys_kind,
+            compat_version: None,
+            lcid,
+            lcid_invoke,
+            code_page,
+            name,
+            doc_string,
+            help_file_path,
+            help_context,
+            lib_flags,
+            version,
+            constants,
+        }
+    }
+
     pub fn sys_kind(&self) -> String {
         self.sys_kind.value()
     }
@@ -49,7 +78,7 @@ impl ProjectInformation {
     }
 
     pub fn code_page(&self) -> u16 {
-        self.codepage.value()
+        self.code_page.value()
     }
 
     pub fn name(&self) -> String {
@@ -102,7 +131,7 @@ impl Parsable for ProjectInformation {
         };
         let lcid = LcidRecord::parse(cursor)?;
         let lcid_invoke = LcidInvokeRecord::parse(cursor)?;
-        let codepage = CodePageRecord::parse(cursor)?;
+        let code_page = CodePageRecord::parse(cursor)?;
         let name = NameRecord::parse(cursor)?;
         let doc_string = DocStringRecord::parse(cursor)?;
         let help_file_path = HelpFilePathRecord::parse(cursor)?;
@@ -123,7 +152,7 @@ impl Parsable for ProjectInformation {
             compat_version,
             lcid,
             lcid_invoke,
-            codepage,
+            code_page,
             name,
             doc_string,
             help_file_path,

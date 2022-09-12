@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LibFlagsRecord {
     id: u16,
     size: u32,
@@ -10,6 +10,14 @@ pub struct LibFlagsRecord {
 }
 
 impl LibFlagsRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0008,
+            size: 0x00000004,
+            lib_flags: 0x00000000,
+        }
+    }
+
     fn value(&self) -> u32 {
         self.lib_flags
     }

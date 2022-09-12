@@ -20,15 +20,4 @@ impl CompressionState {
             decompressed_end: 0,
         }
     }
-
-    // Can probably be deleted, but keeping for now
-    pub(crate) fn set(&mut self, id: &str, new_value: usize) {
-        match id {
-            "compressed_current" => self.compressed_current = new_value,
-            "decompressed_current" => self.decompressed_current = new_value,
-            "compressed_chunk_start" => self.compressed_chunk_start = new_value,
-            "decompressed_chunk_start" => self.decompressed_chunk_start = new_value,
-            _ => {}
-        }
-    }
 }

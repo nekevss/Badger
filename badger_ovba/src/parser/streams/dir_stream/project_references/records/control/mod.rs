@@ -1,9 +1,10 @@
 use crate::parser::{utils, Parsable};
+use crate::utils::convert_mbcs_value;
 use std::{cell::Ref, io::Cursor};
 
 use super::{ReferenceName, ReferenceOriginal};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ReferenceControl {
     reference_original: Option<ReferenceOriginal>,
     id: u16,
@@ -14,6 +15,38 @@ pub struct ReferenceControl {
     libid_extended: Vec<u8>,
     original_type_lib: Vec<u8>,
     cookie: u32,
+}
+
+impl ReferenceControl {
+    pub fn new() -> Self {
+        Self {
+            reference_original: None,
+            id: 0x002F,
+            size_of_libid_twiddled: 0 as u32,
+            libid_twiddled: Vec::<u8>::new(),
+            reference_name: None,
+            size_of_libid_extended: 0 as u32,
+            libid_extended: Vec::<u8>::new(),
+            original_type_lib: Vec::<u8>::new(),
+            cookie: 0 as u32,
+        }
+    }
+
+    pub fn reference_type(&self) -> &'static str {
+        "control"
+    }
+
+    // Libid Twiddled is encoded depending on the Code Page Value
+    pub fn get_libid_twiddled(&self) -> String {
+        let utf8_converted = convert_mbcs_value(&self.libid_twiddled);
+        String::from_utf8(utf8_converted).unwrap()
+    }
+
+    // Libid Extended is encoded according to the Code Page Value
+    pub fn get_libid_extended(&self) -> String {
+        let utf8_converted = convert_mbcs_value(&self.libid_extended);
+        String::from_utf8(utf8_converted).unwrap()
+    }
 }
 
 impl Parsable for ReferenceControl {

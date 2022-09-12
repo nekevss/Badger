@@ -2,11 +2,21 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ProjectCookieRecord {
     id: u16,
     size: u32,
     cookie: u16,
+}
+
+impl ProjectCookieRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0013,
+            size: 0x00000002,
+            cookie: 0xFFFF,
+        }
+    }
 }
 
 impl Parsable for ProjectCookieRecord {

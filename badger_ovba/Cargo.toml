@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 cfb = "0.7.3"
+encoding_rs = "0.8.31"
+codepage = "0.1.1"

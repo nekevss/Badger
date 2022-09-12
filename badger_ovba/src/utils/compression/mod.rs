@@ -94,7 +94,6 @@ fn compress_token(
     compressed_buffer: &mut Vec<u8>,
     state: &mut CompressionState,
 ) -> u8 {
-    let mut offset = 0 as usize;
     let (offset, length) = matching(decompressed_buffer, state);
     if offset != 0 {
         if state.compressed_current + 1 < state.compressed_end {
@@ -136,7 +135,7 @@ fn compress_raw_chunk(
     state.decompressed_current = state.decompressed_chunk_start;
     let mut pad_count = 4096 as usize;
 
-    for byte_index in (state.decompressed_chunk_start..state.decompressed_end) {
+    for byte_index in state.decompressed_chunk_start..state.decompressed_end {
         compressed_buffer[state.compressed_current] = decompressed_buffer[byte_index];
         state.compressed_current += 1;
         state.decompressed_current += 1;
@@ -167,13 +166,14 @@ fn matching(decompressed_buffer: &[u8], state: &mut CompressionState) -> (usize,
 
         if len > best_length {
             best_length = len;
+            best_candidate = candidate;
         }
         candidate -= 1;
     }
 
     if best_length >= 3 {
         //call copy_token_help
-        let (length_mask, offset_mask, bit_count, max_length) =
+        let (_length_mask, _offset_mask, _bit_count, max_length) =
             copy_token_help(state.decompressed_chunk_start, state.decompressed_current);
         let length = if best_length < max_length as usize {
             best_length
@@ -201,11 +201,11 @@ fn pack_compressed_chunk_sig(header: u16) -> u16 {
 fn pack_compressed_chunk_flag(compressed_flag: u16, header: u16) -> u16 {
     let temp = header & 0x7FFF;
     let two = compressed_flag << 15;
-    (temp | two)
+    temp | two
 }
 
 fn set_flag_bit(index: u8, byte: u8) -> u8 {
     let temp = byte << index;
     let temp_2 = byte & (!temp);
-    (temp | temp_2)
+    temp | temp_2
 }

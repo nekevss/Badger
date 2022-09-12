@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct HelpContextRecord {
     id: u16,
     size: u32,
@@ -10,6 +10,14 @@ pub struct HelpContextRecord {
 }
 
 impl HelpContextRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0007,
+            size: 0x00000004,
+            help_context: 0x00000000,
+        }
+    }
+
     pub fn value(&self) -> u32 {
         self.help_context
     }

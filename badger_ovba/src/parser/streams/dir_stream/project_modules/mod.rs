@@ -6,13 +6,25 @@ pub(crate) mod records;
 
 use records::{ModuleRecord, ProjectCookieRecord};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ProjectModules {
     id: u16,
     size: u32,
     count: u16,
     project_cookie: ProjectCookieRecord,
     pub(crate) modules: Vec<ModuleRecord>,
+}
+
+impl ProjectModules {
+    pub fn new() -> Self {
+        Self {
+            id: 0x000F,
+            size: 0x00000002,
+            count: 0x0000,
+            project_cookie: ProjectCookieRecord::new(),
+            modules: Vec::new(),
+        }
+    }
 }
 
 impl Parsable for ProjectModules {

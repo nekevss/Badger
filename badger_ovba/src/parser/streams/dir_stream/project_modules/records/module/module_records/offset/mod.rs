@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleOffsetRecord {
     id: u16,
     size: u32,
@@ -10,6 +10,14 @@ pub struct ModuleOffsetRecord {
 }
 
 impl ModuleOffsetRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0031,
+            size: 0x00000004,
+            text_offset: 0 as u32,
+        }
+    }
+
     pub fn value(&self) -> u32 {
         self.text_offset
     }

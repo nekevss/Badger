@@ -2,11 +2,21 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleNameRecord {
     id: u16,
     size_of_module_name: u32,
     module_name: Vec<u8>,
+}
+
+impl ModuleNameRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0019,
+            size_of_module_name: 0,
+            module_name: Vec::<u8>::new(),
+        }
+    }
 }
 
 impl Parsable for ModuleNameRecord {

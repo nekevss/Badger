@@ -7,9 +7,17 @@ pub mod records;
 
 use records::Reference;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ProjectReferences {
     reference_array: Vec<Reference>,
+}
+
+impl ProjectReferences {
+    pub fn new() -> Self {
+        Self {
+            reference_array: Vec::new(),
+        }
+    }
 }
 
 impl Parsable for ProjectReferences {

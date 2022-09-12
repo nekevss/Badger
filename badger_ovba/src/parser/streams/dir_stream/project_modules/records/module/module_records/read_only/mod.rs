@@ -2,9 +2,15 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleReadOnlyRecord {
     id: u16,
+}
+
+impl ModuleReadOnlyRecord {
+    pub fn new() -> Self {
+        Self { id: 0x0025 }
+    }
 }
 
 impl Parsable for ModuleReadOnlyRecord {

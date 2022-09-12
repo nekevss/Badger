@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct NameRecord {
     id: u16,
     size_of_project_name: u32,
@@ -10,6 +10,14 @@ pub struct NameRecord {
 }
 
 impl NameRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0004,
+            size_of_project_name: 0,
+            name: Vec::new(),
+        }
+    }
+
     pub fn value(&self) -> String {
         String::from_utf8(self.name.clone()).unwrap()
     }

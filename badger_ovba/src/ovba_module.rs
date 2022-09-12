@@ -1,23 +1,16 @@
-use crate::utils::decompress;
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct OvbaModule {
     name: String,
-    compressed_data: Vec<u8>,
+    code: Vec<u8>,
 }
 
 impl OvbaModule {
-    pub(crate) fn new(name: String, compressed_data: Vec<u8>) -> Self {
-        Self {
-            name,
-            compressed_data,
-        }
+    pub(crate) fn new(name: String, code: Vec<u8>) -> Self {
+        Self { name, code }
     }
 
     pub fn print_module(&self) {
-        let data = decompress(&self.compressed_data).unwrap();
-
-        let converted_to_string = String::from_utf8(data).unwrap();
+        let converted_to_string = String::from_utf8(self.code.clone()).unwrap();
         println!("Module Name: {}", self.name);
         println!("-------------------------------");
         println!("{}", converted_to_string);

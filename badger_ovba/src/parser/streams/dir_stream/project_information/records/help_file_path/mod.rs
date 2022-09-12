@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct HelpFilePathRecord {
     id: u16,
     size_of_help_file1: u32,
@@ -12,6 +12,16 @@ pub struct HelpFilePathRecord {
 }
 
 impl HelpFilePathRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0006,
+            size_of_help_file1: 0,
+            help_file1: Vec::new(),
+            size_of_help_file2: 0,
+            help_file2: Vec::new(),
+        }
+    }
+
     pub fn value1(&self) -> String {
         String::from_utf8(self.help_file1.clone()).unwrap()
     }

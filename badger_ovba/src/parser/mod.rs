@@ -65,8 +65,9 @@ impl<'a> Ovba<'a> {
             let mut module_cursor: Cursor<&[u8]> = Cursor::new(&stream_buffer);
 
             let module_stream = ModuleStream::parse(&mut module_cursor, offset)?;
+            let source_code = decompress(&module_stream.source_code())?;
 
-            module_storage.push(OvbaModule::new(module_name, module_stream.source_code()))
+            module_storage.push(OvbaModule::new(module_name, source_code))
         }
 
         Ok(module_storage)

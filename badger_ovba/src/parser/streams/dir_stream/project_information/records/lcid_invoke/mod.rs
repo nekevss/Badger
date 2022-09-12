@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LcidInvokeRecord {
     id: u16,
     size: u32,
@@ -10,6 +10,14 @@ pub struct LcidInvokeRecord {
 }
 
 impl LcidInvokeRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0014,
+            size: 0x00000004,
+            lcid_invoke: 0x00000409,
+        }
+    }
+
     pub fn value(&self) -> u32 {
         self.lcid_invoke
     }

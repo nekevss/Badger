@@ -15,18 +15,31 @@ pub use original::ReferenceOriginal;
 pub use project::ReferenceProject;
 pub use registered::ReferenceRegistered;
 
-#[derive(Debug)]
-pub(crate) enum ReferenceRecord {
+#[derive(Debug, Clone)]
+pub enum ReferenceRecord {
     Control(ReferenceControl),
     Original(ReferenceOriginal),
     Registered(ReferenceRegistered),
     Project(ReferenceProject),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Reference {
     name: Option<ReferenceName>,
     reference_record: ReferenceRecord,
+}
+
+impl Reference {
+    pub fn reference_name(&self) -> String {
+        match &self.name {
+            Some(name) => name.value(),
+            None => "".into(),
+        }
+    }
+
+    pub fn reference(&self) -> &ReferenceRecord {
+       &self.reference_record 
+    }
 }
 
 impl Parsable for Reference {

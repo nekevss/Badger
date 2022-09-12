@@ -4,7 +4,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ConstantsRecord {
     id: u16,
     size_of_constants: u32,
@@ -14,6 +14,16 @@ pub struct ConstantsRecord {
 }
 
 impl ConstantsRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x000C,
+            size_of_constants: 0,
+            constants: Vec::new(),
+            size_of_constants_unicode: 0,
+            constants_unicode: Vec::new(),
+        }
+    }
+
     pub fn value(&self) -> String {
         String::from_utf8(self.constants_unicode.clone()).unwrap()
     }

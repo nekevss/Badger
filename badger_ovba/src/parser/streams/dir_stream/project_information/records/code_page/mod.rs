@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct CodePageRecord {
     _id: u16,
     _size: u32,
@@ -10,6 +10,14 @@ pub struct CodePageRecord {
 }
 
 impl CodePageRecord {
+    pub fn new() -> Self {
+        Self {
+            _id: 0x0003,
+            _size: 0x00000002,
+            code_page: 1252 as u16,
+        }
+    }
+
     pub fn value(&self) -> u16 {
         self.code_page
     }

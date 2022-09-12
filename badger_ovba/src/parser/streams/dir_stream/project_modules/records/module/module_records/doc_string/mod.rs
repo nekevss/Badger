@@ -2,13 +2,25 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleDocStringRecord {
     id: u16,
     size_of_doc_string: u32,
     doc_string: Vec<u8>,
     size_of_doc_string_unicode: u32,
     doc_string_unicode: Vec<u8>,
+}
+
+impl ModuleDocStringRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x001C,
+            size_of_doc_string: 0,
+            doc_string: Vec::new(),
+            size_of_doc_string_unicode: 0,
+            doc_string_unicode: Vec::new(),
+        }
+    }
 }
 
 impl Parsable for ModuleDocStringRecord {

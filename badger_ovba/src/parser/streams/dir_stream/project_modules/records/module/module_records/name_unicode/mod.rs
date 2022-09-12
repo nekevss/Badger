@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleNameUnicodeRecord {
     id: u16,
     size_of_module_name_unicode: u32,
@@ -10,6 +10,14 @@ pub struct ModuleNameUnicodeRecord {
 }
 
 impl ModuleNameUnicodeRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x0047,
+            size_of_module_name_unicode: 0,
+            module_name_unicode: Vec::<u8>::new(),
+        }
+    }
+
     pub fn value(&self) -> String {
         String::from_utf8(self.module_name_unicode.clone()).unwrap()
     }

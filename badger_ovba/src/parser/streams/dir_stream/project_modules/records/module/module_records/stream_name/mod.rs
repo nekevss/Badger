@@ -1,9 +1,8 @@
 use crate::error::Error;
-use crate::parser::streams::dir_stream::project_information::records::name;
 use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ModuleStreamNameRecord {
     id: u16,
     size_of_stream_name: u32,
@@ -13,6 +12,16 @@ pub struct ModuleStreamNameRecord {
 }
 
 impl ModuleStreamNameRecord {
+    pub fn new() -> Self {
+        Self {
+            id: 0x001A,
+            size_of_stream_name: 0,
+            stream_name: Vec::<u8>::new(),
+            size_of_stream_name_unicode: 0,
+            stream_name_unicode: Vec::<u8>::new(),
+        }
+    }
+
     pub fn value(&self) -> String {
         let name_u16 = utils::convert_le_u16(&self.stream_name_unicode).unwrap();
         String::from_utf16(&name_u16).unwrap()

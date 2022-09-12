@@ -18,11 +18,33 @@ use project_information::ProjectInformation;
 use project_modules::ProjectModules;
 use project_references::ProjectReferences;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IndependentVbaProject {
     project_information: ProjectInformation,
     project_references: ProjectReferences,
     pub(crate) project_modules: ProjectModules,
+}
+
+impl IndependentVbaProject {
+    pub fn new() -> Self {
+        Self {
+            project_information: ProjectInformation::new(),
+            project_references: ProjectReferences::new(),
+            project_modules: ProjectModules::new(),
+        }
+    }
+
+    pub fn project_information(&self) -> ProjectInformation {
+        self.project_information.clone()
+    }
+
+    pub fn project_references(&self) -> ProjectReferences {
+        self.project_references.clone()
+    }
+
+    pub fn project_modules(&self) -> ProjectModules {
+        self.project_modules.clone()
+    }
 }
 
 // Note: Experimental layout.
