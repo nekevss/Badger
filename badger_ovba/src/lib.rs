@@ -23,14 +23,18 @@ use std::io::{Cursor, Read};
 pub mod error;
 pub mod ovba_module;
 pub mod parser;
-pub mod utils;
+pub(crate) mod utils;
+pub mod ovba;
+pub mod project_storage;
 
 pub use crate::ovba_module::OvbaModule;
+pub use crate::ovba::Ovba;
+pub use crate::project_storage::OvbaProjectStorage;
 
 use error::Error;
-use parser::IndependentVbaProject as DirStream;
+use parser::DirStream;
 
-use crate::parser::Ovba;
+use crate::parser::Parser;
 
 pub struct BadgerOvba {
     independent_info: DirStream,
@@ -60,9 +64,10 @@ impl BadgerOvba {
     pub fn read_from_compound_file(
         compound_file: CompoundFile<Cursor<Vec<u8>>>,
     ) -> Result<Self, Error> {
-        let mut ovba = Ovba::new(compound_file);
+        let project_storage = OvbaProjectStorage::new(compound_file);
+        let mut ovba = Parser::new(project_storage);
 
-        let independent_info = ovba.parse_independent_info()?;
+        let independent_info = ovba.parse_dir_stream()?;
         let modules = ovba.parse_modules(&independent_info)?;
 
         Ok(Self {

@@ -1,6 +1,6 @@
 use crate::parser::{utils, Parsable};
 use crate::utils::convert_mbcs_value;
-use std::{cell::Ref, io::Cursor};
+use std::io::Cursor;
 
 use super::{ReferenceName, ReferenceOriginal};
 

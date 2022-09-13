@@ -19,13 +19,13 @@ use project_modules::ProjectModules;
 use project_references::ProjectReferences;
 
 #[derive(Debug, Clone)]
-pub struct IndependentVbaProject {
+pub struct DirStream {
     project_information: ProjectInformation,
     project_references: ProjectReferences,
     pub(crate) project_modules: ProjectModules,
 }
 
-impl IndependentVbaProject {
+impl DirStream {
     pub fn new() -> Self {
         Self {
             project_information: ProjectInformation::new(),
@@ -48,8 +48,8 @@ impl IndependentVbaProject {
 }
 
 // Note: Experimental layout.
-impl Parsable for IndependentVbaProject {
-    type Output = IndependentVbaProject;
+impl Parsable for DirStream {
+    type Output = DirStream;
 
     fn parse(cursor: &mut Cursor<&[u8]>) -> Result<Self::Output, Error> {
         let project_information = ProjectInformation::parse(cursor)?;
@@ -58,7 +58,7 @@ impl Parsable for IndependentVbaProject {
         // let terminator = parse_terminator
         // let reserved = parse_reserved
 
-        Ok(IndependentVbaProject {
+        Ok(DirStream {
             project_information,
             project_references,
             project_modules,

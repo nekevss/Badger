@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::parser::{utils, Parsable};
+use crate::parser::utils;
 use std::io::Cursor;
 
 pub struct ModuleStream {
