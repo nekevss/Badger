@@ -26,13 +26,14 @@ pub mod parser;
 pub(crate) mod utils;
 pub mod ovba;
 pub mod project_storage;
+pub mod nodes;
 
 pub use crate::ovba_module::OvbaModule;
 pub use crate::ovba::Ovba;
 pub use crate::project_storage::OvbaProjectStorage;
 
 use error::Error;
-use parser::DirStream;
+use nodes::DirStream;
 
 use crate::parser::Parser;
 

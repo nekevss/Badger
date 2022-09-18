@@ -3,10 +3,9 @@ use crate::utils::decompress;
 use crate::{OvbaModule, OvbaProjectStorage};
 use std::io::Cursor;
 
-pub mod streams;
 pub(crate) mod utils;
 
-pub use crate::parser::streams::{DirStream, ModuleStream};
+pub use crate::nodes::{DirStream, ModuleStream};
 
 pub(crate) trait Parsable {
     type Output;

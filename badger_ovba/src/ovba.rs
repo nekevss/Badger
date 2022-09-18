@@ -14,7 +14,8 @@
 use cfb::CompoundFile;
 use std::io::Cursor;
 
-use crate::parser::{Parser, DirStream};
+use crate::parser::Parser;
+use crate::nodes::DirStream;
 use crate::{OvbaProjectStorage, OvbaModule};
 use crate::Error;
 
@@ -41,7 +42,7 @@ impl Ovba {
 
         let dir = parser.parse_dir_stream()?;
         let modules = parser.parse_modules(&dir)?;
-        
+
 
         Ok(Self{
             _vba_project: 0,
