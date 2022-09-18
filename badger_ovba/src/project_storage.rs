@@ -32,4 +32,19 @@ impl OvbaProjectStorage {
         let path = format!("/VBA/{}", stream_name);
         self.read_stream(path)
     }
+
+    pub fn project_stream(&mut self) -> Result<Vec<u8>, Error> {
+        let path: &'static str = "/PROJECT";
+        self.read_stream(path.to_owned())
+    }
+
+    pub fn project_lk_stream(&mut self) -> Result<Vec<u8>, Error> {
+        let path: &'static str = "PROJECTlk";
+        self.read_stream(path.to_owned())
+    }
+
+    pub fn project_wm_stream(&mut self) -> Result<Vec<u8>, Error> {
+        let path: &'static str = "PROJECTwm";
+        self.read_stream(path.to_owned())
+    }
 }

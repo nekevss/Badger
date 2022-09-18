@@ -3,7 +3,7 @@ use crate::parser::{utils, Parsable};
 use std::io::Cursor;
 
 #[derive(Debug, Clone)]
-pub struct ModuleNameUnicodeRecord {
+pub(crate) struct ModuleNameUnicodeRecord {
     id: u16,
     size_of_module_name_unicode: u32,
     module_name_unicode: Vec<u8>,

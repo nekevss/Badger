@@ -19,6 +19,22 @@ pub fn peek_u16(cursor: &mut Cursor<&[u8]>) -> Result<u16, Error> {
     }
 }
 
+pub fn get_u8(cursor: &mut Cursor<&[u8]>) -> Result<u8, Error> {
+    let cursor_pos = cursor.position() as usize;
+    let internal_ref = &cursor.get_ref();
+    if cursor_pos < internal_ref.len() {
+        let value = u8::from_le_bytes(
+            (internal_ref[cursor_pos..cursor_pos + 1])
+            .try_into()
+            .expect("Try_into() for get_u8 should not fail"),
+        );
+        cursor.set_position(cursor_pos as u64 + 1);
+        Ok(value)
+    } else {
+        Err(Error::Parser("Parser Err: Index get_u8 exceeds the length of the slice".into(), cursor_pos as u64,))
+    }
+}
+
 /// Returns a u16 value from the cursor and increments cursor by 2 bytes
 pub fn get_u16(cursor: &mut Cursor<&[u8]>) -> Result<u16, Error> {
     let cursor_pos = cursor.position() as usize;

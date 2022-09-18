@@ -5,7 +5,7 @@ use std::io::Cursor;
 
 pub(crate) mod utils;
 
-pub use crate::nodes::{DirStream, ModuleStream};
+pub use crate::nodes::{DirStream, ModuleStream, ProjectStream, ProjectLkStream, ProjectWmStream, VbaProjectStream};
 
 pub(crate) trait Parsable {
     type Output;
@@ -53,5 +53,37 @@ impl Parser {
         }
 
         Ok(module_storage)
+    }
+    
+    pub fn parse_vba_project_stream(&mut self) -> Result<VbaProjectStream, Error> {
+        let stream_buffer = self.inner._vba_project()?;
+        let mut cursor = Cursor::new(&stream_buffer[..]);
+        let project_stream = VbaProjectStream::parse(&mut cursor)?;
+
+        Ok(project_stream)
+    }
+
+    pub fn parse_project_stream(&mut self) -> Result<ProjectStream, Error> {
+        let stream_buffer = self.inner.project_stream()?;
+        let mut cursor = Cursor::new(&stream_buffer[..]);
+        let project_stream = ProjectStream::parse(&mut cursor)?;
+
+        Ok(project_stream)
+    }
+
+    pub fn parse_project_lk_stream(&mut self) -> Result<ProjectLkStream, Error> {
+        let stream_buffer = self.inner.project_lk_stream()?;
+        let mut cursor =  Cursor::new(&stream_buffer[..]);
+        let project_lk = ProjectLkStream::parse(&mut cursor)?;
+
+        Ok(project_lk)
+    }
+
+    pub fn parse_project_wm_stream(&mut self) -> Result<ProjectWmStream, Error> {
+        let stream_buffer = self.inner.project_wm_stream()?;
+        let mut cursor = Cursor::new(&stream_buffer[..]);
+        let project_wm = ProjectWmStream::parse(&mut cursor)?;
+
+        Ok(project_wm)
     }
 }

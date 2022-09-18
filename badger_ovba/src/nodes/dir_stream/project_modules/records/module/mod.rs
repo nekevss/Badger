@@ -4,7 +4,7 @@ use std::io::Cursor;
 
 pub(crate) mod module_records;
 
-use module_records::{
+pub(crate) use module_records::{
     ModuleCookieRecord, ModuleDocStringRecord, ModuleHelpContextRecord, ModuleNameRecord,
     ModuleNameUnicodeRecord, ModuleOffsetRecord, ModulePrivateRecord, ModuleReadOnlyRecord,
     ModuleStreamNameRecord, ModuleTypeRecord,
